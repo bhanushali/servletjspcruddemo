@@ -19,7 +19,26 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     private Connection con = DBUtil.getConnection();
     @Override
     public Employee get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String selectQuery = "SELECT * FROM employee WHERE employee_id = ?";
+        Employee employee = null;
+        try (PreparedStatement pstmt = con.prepareStatement(selectQuery)) {            
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            
+            rs.next();
+            
+            employee = new Employee();
+            employee.setId(rs.getInt("employee_id"));
+            employee.setEmployeeName(rs.getString("employee_name"));
+            employee.setDepartment(rs.getString("department"));
+            
+            rs.close();
+        }
+        catch(SQLException ex) {
+            System.out.println("SQL Error: " + ex.getMessage());
+        }
+        
+        return employee;
     }
 
     @Override
@@ -65,7 +84,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     }
 
     @Override
-    public void save(Employee employee) {
+    public void insert(Employee employee) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

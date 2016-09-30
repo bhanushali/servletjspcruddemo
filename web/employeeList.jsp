@@ -26,6 +26,7 @@
                 <th>
                     Department
                 </th>
+                <th colspan="2"></th>
             </tr>
             <%
                 // got the employess from the request object
@@ -47,7 +48,9 @@
             <tr>
                 <td><%= emp.getId()%></td>
                 <td><%= emp.getEmployeeName()%></td>
-                <td><%= emp.getDepartment()%></td>                
+                <td><%= emp.getDepartment()%></td> 
+                <td><a href="EmployeeController.do?operation=edit&id=<%= emp.getId()%>">Edit</a></td> 
+                <td><a href="EmployeeController.do?operation=delete&id=<%= emp.getId()%>">Delete</a></td> 
             </tr>            
             
             <%
@@ -57,7 +60,7 @@
             
         </table>
         
-        
+        <a href="EmployeeController.do?operation=create">Create New Employee</a>
         
         
     </body>
