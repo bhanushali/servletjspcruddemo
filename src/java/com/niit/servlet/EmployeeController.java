@@ -5,6 +5,8 @@
  */
 package com.niit.servlet;
 
+import com.niit.dao.EmployeeDAO;
+import com.niit.dao.EmployeeDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -22,22 +24,15 @@ import javax.servlet.http.HttpServletResponse;
 public class EmployeeController extends HttpServlet {
     
     private static final String LIST_VIEW = "employeeList.jsp";
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String forward = "";
         try (PrintWriter out = response.getWriter()) {
             String operation = request.getParameter("operation");
-            if(operation.equalsIgnoreCase("list")) {
+            if(operation.equalsIgnoreCase("list")) {                
+                request.setAttribute("employees", employeeDAO.getAll());
                 forward = LIST_VIEW;
             }                        
     
